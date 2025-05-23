@@ -1,7 +1,8 @@
 # SimiName
 
-1. 
-Courbes d’usage (INSEE, SSA…) : deux prénoms en vogue à la même époque se rapprochent.
+1. Courbes d’usage (INSEE, SSA…) : deux prénoms en vogue à la même époque se rapprochent.
+Data : https://www.insee.fr/fr/statistiques/8205621
+
 
 2. Représentations par embeddings de mots
 On traite chaque prénom comme un “mot” : on peut entraîner (ou utiliser) un modèle Word2Vec/GloVe sur un corpus (ex. Wikipedia) et extraire un vecteur.
