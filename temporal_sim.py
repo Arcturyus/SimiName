@@ -148,7 +148,7 @@ def cos_sim_nom(nom1,nom2):
 
     return details
 
-cos_sim_nom('ROMAIN','CHARLOTTE')
+cos_sim_nom('ROMAIN','TEDDY')
 
 # %%
 all_names = list(set(series_masculin.keys()) | set(series_feminin.keys()))
