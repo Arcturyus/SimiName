@@ -89,6 +89,7 @@ def plot_prenom(nom, series_masculin, series_feminin, figsize=(12, 6)):
     if has_data_f:
         print(f"Féminin  - Total: {serie_f.sum():,} | Année Pic: {serie_f.idxmax()} ({serie_f.max():,}) | Moyenne: {serie_f.mean():.0f}")
 plot_prenom('ROMAIN', series_masculin, series_feminin)
+plot_prenom('TEDDY', series_masculin, series_feminin)
 # %%
 # cos sim
 def cos_sim_nom(nom1,nom2):
@@ -152,9 +153,7 @@ cos_sim_nom('ROMAIN','CHARLOTTE')
 # %%
 all_names = list(set(series_masculin.keys()) | set(series_feminin.keys()))
 def most_similar_names(nom, top_n=10,list_names=[]):
-    """
-    Find the top N most similar names to the given name based on cosine similarity.
-    """
+
     similarities = []
     
     for other_nom in list_names:
@@ -171,6 +170,6 @@ def most_similar_names(nom, top_n=10,list_names=[]):
     # Convert results to a DataFrame for easier viewing/sorting
     results_df = pd.DataFrame(similarities)
     
-    return results_df.sort_values(by='score_final', ascending=False).head(10)
+    return results_df.sort_values(by='score_final', ascending=False).head(top_n)
 
 most_similar_names('ROMAIN', top_n=10, list_names=all_names)
