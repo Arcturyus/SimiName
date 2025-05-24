@@ -119,11 +119,58 @@ def cos_sim_nom(nom1,nom2):
     cos_sim_m = cosine_similarity([vec_m1], [vec_m2])[0][0]
     cos_sim_f = cosine_similarity([vec_f1], [vec_f2])[0][0]
     
-    print(f"Cosine similarity between {nom1} and {nom2}:")
-    print(f"Masculin: {cos_sim_m:.3f}")
-    print(f"Féminin: {cos_sim_f:.3f}")
-    
-    return cos_sim_m, cos_sim_f
 
-cos_sim_nom('ROMAIN','THIBAUT')
+    norm_m1 = np.linalg.norm(vec_m1)
+    norm_m2 = np.linalg.norm(vec_m2)
+    norm_f1 = np.linalg.norm(vec_f1)
+    norm_f2 = np.linalg.norm(vec_f2)
+    
+    # Normes moyennes pour chaque paire
+    norm_m_avg = (norm_m1 + norm_m2) / 2
+    norm_f_avg = (norm_f1 + norm_f2) / 2
+    
+    # Normalisation des poids (pour que la somme = 1)
+    total_norm = norm_m_avg + norm_f_avg
+    weight_m = norm_m_avg / total_norm
+    weight_f = norm_f_avg / total_norm
+    
+    score_final = weight_m * cos_sim_m + weight_f * cos_sim_f
+    details = {
+        'cos_sim_m': cos_sim_m,
+        'cos_sim_f': cos_sim_f,
+        'norm_m_avg': norm_m_avg,
+        'norm_f_avg': norm_f_avg,
+        'weight_m': weight_m,
+        'weight_f': weight_f,
+        'score_final': score_final
+    }
+
+    return details
+
+cos_sim_nom('ROMAIN','CHARLOTTE')
+
 # %%
+all_names = list(set(series_masculin.keys()) | set(series_feminin.keys()))
+def most_similar_names(nom, top_n=10,list_names=[]):
+    """
+    Find the top N most similar names to the given name based on cosine similarity.
+    """
+    similarities = []
+    
+    for other_nom in list_names:
+        if other_nom != nom:
+            # Store the results along with the names
+            details = cos_sim_nom(nom, other_nom)
+            result_entry = {
+                'nom1': nom,
+                'nom2': other_nom,
+                **details # Unpack the dictionary from cos_sim_nom
+            }
+            similarities.append(result_entry)
+
+    # Convert results to a DataFrame for easier viewing/sorting
+    results_df = pd.DataFrame(similarities)
+    
+    return results_df.sort_values(by='score_final', ascending=False).head(10)
+
+most_similar_names('ROMAIN', top_n=10, list_names=all_names)
