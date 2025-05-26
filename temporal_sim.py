@@ -24,6 +24,7 @@ for prenom, group in df_m.groupby('preusuel'):
 
 for prenom, group in df_f.groupby('preusuel'):
     series_feminin[prenom] = group.set_index(group['annais'].astype(int))['nombre'].astype(int).sort_index()
+all_names = list(set(series_masculin.keys()) | set(series_feminin.keys()))
 
 #%%
 def plot_prenom(nom, series_masculin, series_feminin, figsize=(12, 6)):
@@ -151,7 +152,6 @@ def cos_sim_nom(nom1,nom2):
 cos_sim_nom('ROMAIN','TEDDY')
 
 # %%
-all_names = list(set(series_masculin.keys()) | set(series_feminin.keys()))
 def most_similar_names(nom, top_n=10,list_names=[]):
 
     similarities = []
