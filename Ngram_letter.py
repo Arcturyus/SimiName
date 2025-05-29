@@ -63,22 +63,21 @@ def ngram_letter(word, n):
     
     return ngram_freq
 
-freq_letter('alice')
+len(freq_letter('alice')),len(ngram_letter('alice', 2))
 #%%
 
 
-def most_similar_names(nom, top_n=10,list_names=[]):
+def most_similar_names(nom, top_n=10,list_names=[],function_letter=freq_letter):
 
     similarities = []
-    vec_nom = freq_letter(nom.lower())
+    vec_nom = function_letter(nom.lower())
     for other_nom in list_names:
         if other_nom != nom:
-            # Store the results along with the names
-            details = cosine_similarity([vec_nom], [freq_letter(other_nom.lower())])[0][0]
+            details = cosine_similarity([vec_nom], [function_letter(other_nom.lower())])[0][0]
             result_entry = {
                 'nom1': nom,
                 'nom2': other_nom,
-                'score_final': details # Unpack the dictionary from cos_sim_nom
+                'score_final': details
             }
             similarities.append(result_entry)
 
@@ -87,4 +86,11 @@ def most_similar_names(nom, top_n=10,list_names=[]):
     
     return results_df.sort_values(by='score_final', ascending=False).head(top_n)
 
-most_similar_names('ROMAIN', top_n=25, list_names=all_names)
+df_freqletter = most_similar_names('ROMAIN', top_n=200, list_names=all_names)
+df_2grams = most_similar_names('ROMAIN', top_n=200, list_names=all_names, function_letter=lambda x: ngram_letter(x, 2))
+
+df_merged = pd.merge(df_freqletter, df_2grams, on='nom2', suffixes=('_freq', '_2gram'))
+df_merged = df_merged[['nom2', 'score_final_freq', 'score_final_2gram']]
+df_merged['score_sum'] = df_merged['score_final_freq'] + df_merged['score_final_2gram']
+df_merged = df_merged.sort_values(by='score_sum', ascending=False)
+df_merged
