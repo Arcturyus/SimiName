@@ -13,7 +13,7 @@ removed_count = initial_count - final_count
 print(f"Removed {removed_count}/{initial_count} rows with non-numeric 'annais' values")
 #%%
 ##### TODO REMPLACE CA PAR UN FICHIER QUI STOCKE LA LISTE ALL NAMES 
-##### TODO ET UN QUI STOCKE LES ALL NAMES DONNER PLUS DE X FOIS DEPUIS 1900
+##### TODO ET UN QUI STOCKE LES ALL NAMES present PLUS DE X FOIS DEPUIS 1900
 
 series_masculin = {}
 series_feminin = {}
