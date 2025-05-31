@@ -1,6 +1,8 @@
 #%%
 import pandas as pd
 from sklearn.metrics.pairwise import cosine_similarity
+import Levenshtein
+
 
 #%%
 # Read the CSV file
@@ -94,3 +96,38 @@ df_merged = df_merged[['nom2', 'score_final_freq', 'score_final_2gram']]
 df_merged['score_sum'] = df_merged['score_final_freq'] + df_merged['score_final_2gram']
 df_merged = df_merged.sort_values(by='score_sum', ascending=False)
 df_merged
+
+
+#%%
+def most_similar_names_distance(nom, top_n=10, list_names=[], function_distance=Levenshtein.distance,inverse=False):
+    similarities = []
+    for other_nom in list_names:
+        if other_nom != nom:
+            distance = function_distance(nom.lower(), other_nom.lower())
+            result_entry = {
+                'nom1': nom,
+                'nom2': other_nom,
+                'distance': distance
+            }
+            similarities.append(result_entry)
+    results_df = pd.DataFrame(similarities)
+    if inverse:
+        return results_df.sort_values(by='distance', ascending=False).head(top_n)
+    else:
+        return results_df.sort_values(by='distance').head(top_n)
+
+# Test with all 4 distance functions
+df_distance = most_similar_names_distance('ROMAIN', top_n=200, list_names=all_names, function_distance=Levenshtein.distance)
+df_ratio = most_similar_names_distance('ROMAIN', top_n=200, list_names=all_names, function_distance=Levenshtein.ratio, inverse=True)
+df_jaro = most_similar_names_distance('ROMAIN', top_n=200, list_names=all_names, function_distance=Levenshtein.jaro, inverse=True)
+df_jaro_winkler = most_similar_names_distance('ROMAIN', top_n=200, list_names=all_names, function_distance=Levenshtein.jaro_winkler, inverse=True)
+
+# Merge all distance/similarity results
+df_all = df_distance[['nom2', 'distance']].rename(columns={'distance': 'levenshtein_distance'})
+df_all = df_all.merge(df_ratio[['nom2', 'distance']].rename(columns={'distance': 'ratio'}), on='nom2')
+df_all = df_all.merge(df_jaro[['nom2', 'distance']].rename(columns={'distance': 'jaro'}), on='nom2')
+df_all = df_all.merge(df_jaro_winkler[['nom2', 'distance']].rename(columns={'distance': 'jaro_winkler'}), on='nom2')
+
+# Also merge with the frequency/ngram results
+df_all = df_all.sort_values(by='jaro_winkler', ascending=False)
+df_all

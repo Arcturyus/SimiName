@@ -23,7 +23,7 @@ Peut être combiné avec réduction de dimension (PCA/t-SNE/UMAP) pour visualisa
     
 
 5. Similarité phonétique
-    - Algorithmes Soundex/Metaphone : rapprochent par prononciation
+    - Algorithmes Soundex/Metaphone : rapprochent par prononciation (phonex librairie adapté au français)
     - Distance sur transcriptions IPA : mesure entre représentations phonétiques
 
 6. ou info dessus (sens, origine, etc.) ?

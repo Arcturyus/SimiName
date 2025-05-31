@@ -32,6 +32,7 @@ all_names = list(set(series_masculin.keys()) | set(series_feminin.keys()))
 
 #%%
 
+### Phonex = soundex adapté au français
 
 def most_similar_names(nom, list_names, top_n=10, function_similarity=phonex.phonex):
 
