@@ -27,3 +27,19 @@ Peut être combiné avec réduction de dimension (PCA/t-SNE/UMAP) pour visualisa
     - Distance sur transcriptions IPA : mesure entre représentations phonétiques
 
 6. ou info dessus (sens, origine, etc.) ?
+
+## Sites
+
+L'idée c'est d'en faire un site avec plusieurs fonctionnalités :
+
+**Recherche de prénoms similaires**  
+- Saisie d'un prénom et récupération automatique des prénoms similaires via différentes techniques (embeddings, distances d'édition, phonétiques, etc.).  
+- Suggestion et comparaison des prénoms en se basant sur des critères multiples.
+
+**Visualisation des courbes d'usage (1900-2023)**  
+- Affichage interactif d'une courbe de popularité du prénom sélectionné sur la période 1900-2023.  
+- Comparaison en temps réel des tendances d'usage entre le prénom donné et ses prénoms similaires.
+
+**Analyses complémentaires**  
+- Exploration des similarités orthographiques et statistiques à travers des graphiques détaillés.  
+- Options de filtrage et de personnalisation
