@@ -30,7 +30,7 @@ Peut être combiné avec réduction de dimension (PCA/t-SNE/UMAP) pour visualisa
 
 ## Sites
 
-L'idée c'est d'en faire un site avec plusieurs fonctionnalités :
+L'idée c'est d'en faire un petit site avec plusieurs fonctionnalités :
 
 **Recherche de prénoms similaires**  
 - Saisie d'un prénom et récupération automatique des prénoms similaires via différentes techniques (embeddings, distances d'édition, phonétiques, etc.).  
@@ -42,4 +42,6 @@ L'idée c'est d'en faire un site avec plusieurs fonctionnalités :
 
 **Analyses complémentaires**  
 - Exploration des similarités orthographiques et statistiques à travers des graphiques détaillés.  
-- Options de filtrage et de personnalisation
+- Options de filtrage et de personnalisation (par exemple par genre, date min, max, ... ou par autre critère qu'on a ou mettre des poids sur les critères de similarité).
+
+
